@@ -27,9 +27,9 @@ function authenticate(code, cb) {
   });
   
   var auth = new Buffer(config.oauth_cliend_id + ':' + config.oauth_client_secret).toString('base64');
+  console.log('### auth : ' + auth);
   var reqOptions = {
     host: config.oauth_host,
-    protocol: config.oauth_port,
     path: config.oauth_path,
     method: config.oauth_method,
     headers: { 
@@ -44,7 +44,6 @@ function authenticate(code, cb) {
     res.setEncoding('utf8');
     res.on('data', function (chunk) { body += chunk; });
     res.on('end', function() {
-      console.log('### ' + body);
       cb(null, JSON.parse(body).access_token);
     });
   });
