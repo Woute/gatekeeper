@@ -31,6 +31,7 @@ function authenticate(code, cb) {
     host: config.oauth_host,
     path: config.oauth_path,
     method: config.oauth_method,
+    port: config.oauth_port,
     headers: { 
 	  'Authorization': 'Basic ' + auth,
 	  'Content-Type': 'application/x-www-form-urlencoded',
