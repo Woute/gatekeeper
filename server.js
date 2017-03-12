@@ -26,8 +26,7 @@ function authenticate(code, cb) {
     code: code
   });
   
-  var auth = new Buffer(config.oauth_cliend_id + ':' + config.oauth_client_secret).toString('base64');
-  console.log('### auth : ' + auth);
+  var auth = new Buffer(config.oauth_client_id + ':' + config.oauth_client_secret).toString('base64');
   var reqOptions = {
     host: config.oauth_host,
     path: config.oauth_path,
