@@ -22,17 +22,21 @@ var config = loadConfig();
 
 function authenticate(code, cb) {
   var data = qs.stringify({
-    client_id: config.oauth_client_id,
-    client_secret: config.oauth_client_secret,
+    grant_type: 'authorization_code',
     code: code
   });
-
+  
+  var auth = new Buffer(config.oauth_cliend_id + ':' + config.oauth_client_secret).toString('base64');
   var reqOptions = {
     host: config.oauth_host,
-    port: config.oauth_port,
+    protocol: config.oauth_port,
     path: config.oauth_path,
     method: config.oauth_method,
-    headers: { 'content-length': data.length }
+    headers: { 
+	  'Authorization': 'Basic ' + auth,
+	  'Content-Type': 'application/x-www-form-urlencoded',
+	  'Host': config.oauth_host
+	}
   };
 
   var body = "";
@@ -40,7 +44,8 @@ function authenticate(code, cb) {
     res.setEncoding('utf8');
     res.on('data', function (chunk) { body += chunk; });
     res.on('end', function() {
-      cb(null, qs.parse(body).access_token);
+      console.log(body);
+      cb(null, JSON.parse(body).access_token);
     });
   });
 
