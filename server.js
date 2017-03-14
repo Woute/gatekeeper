@@ -50,10 +50,12 @@ function authenticate(code, refresh, cb) {
 	let req = https.request(reqOptions, function(res) {
 		res.setEncoding('utf8');
 		res.on('data', function (chunk) { body += chunk; });
-		console.log(data);
-		console.log(body);
 		res.on('end', function() {
-			cb(null, JSON.parse(body).access_token);
+			if (this.status >= 200 && this.status < 300) {
+				cb(null, JSON.parse(body).access_token);
+			} else {
+				cb({ status: this.status, statusText: req.statusText });
+			}
 		});
 	});
 
