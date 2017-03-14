@@ -32,7 +32,7 @@ function authenticate(code, refresh, cb) {
 			refresh_token: code
 		});
 	}
-	
+	console.log(data);
 	let auth = new Buffer(config.oauth_client_id + ':' + config.oauth_client_secret).toString('base64');
 	let reqOptions = {
 		host: config.oauth_host,
@@ -51,6 +51,7 @@ function authenticate(code, refresh, cb) {
 		res.setEncoding('utf8');
 		res.on('data', function (chunk) { body += chunk; });
 		res.on('end', function() {
+			console.log(this);
 			if (this.status >= 200 && this.status < 300) {
 				cb(null, JSON.parse(body).access_token);
 			} else {
