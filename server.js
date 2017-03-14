@@ -50,6 +50,8 @@ function authenticate(code, refresh, cb) {
 	let req = https.request(reqOptions, function(res) {
 		res.setEncoding('utf8');
 		res.on('data', function (chunk) { body += chunk; });
+		console.log(data);
+		console.log(body);
 		res.on('end', function() {
 			cb(null, JSON.parse(body).access_token);
 		});
