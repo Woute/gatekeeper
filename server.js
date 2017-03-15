@@ -23,8 +23,9 @@ app.all('*', function (req, res, next) {
 
 
 app.post('/authenticate', function(req, res) {
-	console.log(req.get('origin'));
-	console.log(req.get('host'));
+	if (req.get('origin') != 'https://woute.github.io') {
+		res.json({"error":{"status":401,"statusText":"Unauthorized"}});
+	}
 	console.log('authenticating code:' + JSON.stringify(req.body));
 	console.log(req);
 	authenticate(req.body)
