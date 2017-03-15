@@ -29,7 +29,7 @@ app.post('/authenticate', function(req, res) {
 		res.json({"toto":result});
 	})
 	.catch(err => {
-		res.json({"error":err);
+		res.json({"error":err});
 	});
 });
 
