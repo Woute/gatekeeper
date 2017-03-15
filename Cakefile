@@ -1,10 +1,4 @@
-fs            = require 'fs'
 {spawn, exec} = require 'child_process'
-
-# Config
-# ----------
-
-config = JSON.parse(fs.readFileSync(__dirname+ '/config.json', 'utf-8'))
 
 # ANSI terminal colors.
 # ----------
@@ -18,10 +12,6 @@ reset = `'\033[0m'`
 
 herokuCreate = "heroku create --stack cedar"
 herokuPush   = "git push heroku master"
-herokuConfig = "heroku config:add NODE_ENV=production"
-
-herokuConfig = (client, secret) ->
-  "heroku config:add OAUTH_CLIENT_ID=#{client} OAUTH_CLIENT_SECRET=#{secret}"
 
 # Helpers
 # ----------
@@ -32,15 +22,6 @@ log = (message, color, explanation) ->
 
 # Tasks
 # ----------
-
-option '-c', '--client [CLIENT_ID]', 'Client ID'
-option '-s', '--secret [CLIENT_SECRET]', 'Client Secret'
-
-task 'heroku:config', 'Reconfigure heroku', (options) ->
-  exec herokuConfig(options.client, options.secret), (err, stdout, stderr) ->
-    throw err if err
-    log stdout
-    log 'Sucessfully configured the app on heroku.', green
 
 task 'heroku:create', 'Create the app on the cedar stack', (options) ->
   exec herokuCreate, (err, stdout, stderr) ->
