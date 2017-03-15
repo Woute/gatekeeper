@@ -9,8 +9,7 @@ app.use(express.json());
 
 function authenticate(body) {
 	return new Promise(function(resolve, reject) {
-		console.log(body);
-		resolve(body);
+		resolve(true);
 	});
 }
 
@@ -23,12 +22,11 @@ app.all('*', function (req, res, next) {
 });
 
 app.post('/authenticate', function(req, res) {
-	console.log('authenticating code:' + req.body);
-	console.log(req);
-	authenticate(req)
+	console.log('authenticating code:' + req.body.toto);
+	console.log(req.body);
+	authenticate(req.body)
 	.then(result => {
-		console.log(result);
-		res.json(result);
+		res.json({"toto":result});
 	});
 });
 
