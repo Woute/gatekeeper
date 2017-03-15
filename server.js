@@ -3,8 +3,9 @@ let rp = require('request-promise'),
 	fs = require('fs'),
 	qs = require('querystring'),
 	express = require('express'),
-	app = express(),
-	app.use(express.json());
+	app = express();
+	
+app.use(express.json());
 
 function authenticate(body) {
 	return new Promise(function(resolve, reject) {
