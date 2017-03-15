@@ -23,7 +23,7 @@ app.all('*', function (req, res, next) {
 
 app.post('/authenticate', function(req, res) {
 	console.log('authenticating code:' + JSON.stringify(req.body));
-	console.log(req.get('host' + ' _ ' + req.get('origin') + ' _ ' + req.socket.remoteAddress);
+	console.log(req.get('host') + ' _ ' + req.get('origin') + ' _ ' + req.socket.remoteAddress);
 	authenticate(req.body)
 	.then(result => {
 		res.raw({"toto":result});
