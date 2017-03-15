@@ -13,6 +13,15 @@ function authenticate(body) {
 	});
 }
 
+// Convenience for allowing CORS on routes - GET and POST only
+app.all('*', function (req, res, next) {
+	res.header('Access-Control-Allow-Origin', '*');
+	res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+	res.header('Access-Control-Allow-Headers', 'Content-Type');
+	next();
+});
+
+
 app.post('/authenticate', function(req, res) {
 	console.log(req.get('origin'));
 	console.log(req.get('host'));
@@ -27,13 +36,6 @@ app.post('/authenticate', function(req, res) {
 	});
 });
 
-// Convenience for allowing CORS on routes - GET and POST only
-app.all('*', function (req, res, next) {
-	res.header('Access-Control-Allow-Origin', 'https://woute.github.io');
-	res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-	res.header('Access-Control-Allow-Headers', 'Content-Type');
-	next();
-});
 
 let port = process.env.PORT || 9999;
 
