@@ -23,7 +23,8 @@ app.all('*', function (req, res, next) {
 });
 
 app.post('/authenticate', function(req, res) {
-	console.log('authenticating code:' + JSON.stringify(req));
+	console.log('authenticating code:' + req.body);
+	console.log(req);
 	authenticate(req)
 	.then(result => {
 		console.log(result);
