@@ -26,7 +26,7 @@ app.post('/authenticate', function(req, res) {
 	console.log(req);
 	authenticate(req.body)
 	.then(result => {
-		res.raw({"toto":result});
+		res.json({"toto":result});
 	})
 	.catch(err => {
 		res.json({"error":err);
