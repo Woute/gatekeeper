@@ -24,7 +24,7 @@ app.all('*', function (req, res, next) {
 
 app.post('/authenticate', function(req, res) {
 	if (req.get('origin') != 'https://woute.github.io') {
-		res.json({"error":{"status":401,"statusText":"Unauthorized"}});
+		res.status('401').send('Unauthorized');
 	}
 	console.log('authenticating code:' + JSON.stringify(req.body));
 	console.log(req);
@@ -33,7 +33,7 @@ app.post('/authenticate', function(req, res) {
 		res.json({"toto":result});
 	})
 	.catch(err => {
-		res.json({"error":err});
+		res.status('500').send(err);
 	});
 });
 
