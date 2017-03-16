@@ -70,17 +70,16 @@ app.post('/authenticate', function(req, res) {
 	if (req.get('origin') != 'https://woute.github.io') {
 		res.status('401').send('Unauthorized');
 	}
-	console.log('hello');
 	let data = {};
 	authenticate(req.body.clientID, req.body.secret, req.body.code)
 	.then(result => {
-		let token = result.access_token;
+		let token = JSON.parse(result).access_token;
 		data.token = token;
-		data.refresh_token = result.refresh_token;
+		data.refresh_token = JSON.parse(result).refresh_token;
 		return verify(token);
 	})
 	.then(result => {
-		data.characterID = result.CharacterID;
+		data.characterID = JSON.parse(result).CharacterID;
 		res.json(data);
 	})
 	.catch(err => {
