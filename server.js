@@ -9,6 +9,8 @@ app.use(express.json());
 
 function authenticate(body) {
 	return new Promise(function(resolve, reject) {
+		console.log(body);
+		console.log(JSON.parse(body));
 		let clientID = body.clientID;
 		let secret = body.secret;
 		let code = body.code;
@@ -53,6 +55,7 @@ app.post('/authenticate', function(req, res) {
 		res.status('401').send('Unauthorized');
 	}
 	console.log('Authenticating :' + JSON.stringify(req.body));
+	console.log(req.body);
 	authenticate(req.body)
 	.then(result => {
 		res.send(result);
