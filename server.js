@@ -12,6 +12,7 @@ function authenticate(body) {
 		let clientID = body.clientID;
 		let secret = body.secret;
 		let code = body.code;
+		console.log(clientID + ' _ ' + secret + ' _ ' + code);
 		let data = {
 			grant_type: "authorization_code",
 			code: code
