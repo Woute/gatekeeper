@@ -9,15 +9,20 @@ app.use(express.json());
 
 function authenticate(clientID, secret, code) {
 	return new Promise(function(resolve, reject) {
+		console.log('Entering authenticate');
 		let clientID = clientID;
 		let secret = secret;
 		let code = code;
+		console.log(clientID + ' _ ' + secret + ' _ ' + code);
 		let data = {
 			grant_type: "authorization_code",
 			code: code
 		};
+		console.log(data);
 		let body = qs.stringify(data);
+		console.log('### ' + body);
 		let basic = new Buffer(clientID + ':' + secret).toString('base64');
+		console.log('### ' + basic);
 		let options = {
 			method: 'POST',
 			uri: 'https://login.eveonline.com/oauth/token',
@@ -51,6 +56,7 @@ app.post('/authenticate', function(req, res) {
 	if (req.get('origin') != 'https://woute.github.io') {
 		res.status('401').send('Unauthorized');
 	}
+	console.log(req.body.clientID + ' _ ' + req.body.secret + ' _ ' + req.body.code);
 	authenticate(req.body.clientID, req.body.secret, req.body.code)
 	.then(result => {
 		res.send(result);
