@@ -55,7 +55,7 @@ app.post('/authenticate', function(req, res) {
 		res.status('401').send('Unauthorized');
 	}
 	console.log('Authenticating :' + JSON.stringify(req.body));
-	console.log(req.body);
+	console.log(req.body.clientID);
 	authenticate(req.body)
 	.then(result => {
 		res.send(result);
