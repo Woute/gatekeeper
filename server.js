@@ -79,7 +79,7 @@ app.post('/authenticate', function(req, res) {
 		return verify(token);
 	})
 	.then(result => {
-		let data.characterID = result.CharacterID;
+		data.characterID = result.CharacterID;
 		res.json(data);
 	})
 	.catch(err => {
