@@ -7,13 +7,19 @@ let rp = require('request-promise'),
 	
 app.use(express.json());
 
-function authenticate(clientID, secret, code) {
+function authenticate(clientID, secret, code, refresh) {
 	return new Promise(function(resolve, reject) {
 		console.log('Authenticating : clientID=' + clientID + ', secret=' + secret + ', code=' + code);
 		let data = {
 			grant_type: "authorization_code",
 			code: code
 		};
+		if (resfresh) {
+			data = {
+				grant_type: "refresh_token",
+				refresh_token: code
+			}
+		}
 		let body = qs.stringify(data);
 		let basic = new Buffer(clientID + ':' + secret).toString('base64');
 		let options = {
@@ -68,7 +74,7 @@ app.all('*', function (req, res, next) {
 
 app.post('/authenticate', function(req, res) {
 	if (req.get('origin') != 'https://woute.github.io') {
-		res.status('401').send('Unauthorized');
+		res.status('403').send('Forbidden : Bad origin');
 	}
 	let data = {};
 	authenticate(req.body.clientID, req.body.secret, req.body.code)
@@ -87,6 +93,23 @@ app.post('/authenticate', function(req, res) {
 	});
 });
 
+app.post('/refresh', function(req, res) {
+	if (req.get('origin') != 'https://woute.github.io') {
+		res.status('403').send('Forbidden : Bad origin');
+	}
+	let data = {};
+	authenticate(req.body.clientID, req.body.secret, req.body.code, true)
+	.then(response => {
+		let result = JSON.parse(response);
+		let token = result.access_token;
+		data.token = token;
+		data.refresh_token = result.refresh_token;
+		res.json(data);
+	})
+	.catch(err => {
+		res.status('500').send(err);
+	});
+});
 
 let port = process.env.PORT || 9999;
 
