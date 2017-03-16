@@ -14,7 +14,7 @@ function authenticate(clientID, secret, code, refresh) {
 			grant_type: "authorization_code",
 			code: code
 		};
-		if (resfresh) {
+		if (refresh) {
 			data = {
 				grant_type: "refresh_token",
 				refresh_token: code
