@@ -9,7 +9,32 @@ app.use(express.json());
 
 function authenticate(body) {
 	return new Promise(function(resolve, reject) {
-		resolve(true);
+		let clientID = body.clientID;
+		let secret = body.secret;
+		let code = body.code;
+		let data = {
+			grant_type: "authorization_code",
+			code: code
+		};
+		let body = qs.stringify(data);
+		let basic = new Buffer(clientID + ':' + secret).toString('base64');
+		let options = {
+			method: 'POST',
+			uri: 'https://login.eveonline.com/oauth/token',
+			body: body,
+			headers: {
+				'Authorization': 'Basic ' + basic,
+				'Content-Type': 'application/x-www-form-urlencoded',
+				'Host': 'login.eveonline.com'
+			}
+		}
+		rp(options)
+		.then(response => {
+			resolve(response);
+		})
+		.catch(err => {
+			reject(err);
+		});
 	});
 }
 
@@ -26,11 +51,10 @@ app.post('/authenticate', function(req, res) {
 	if (req.get('origin') != 'https://woute.github.io') {
 		res.status('401').send('Unauthorized');
 	}
-	console.log('authenticating code:' + JSON.stringify(req.body));
-	console.log(req);
+	console.log('Authenticating :' + JSON.stringify(req.body));
 	authenticate(req.body)
 	.then(result => {
-		res.json({"toto":result});
+		res.send(result);
 	})
 	.catch(err => {
 		res.status('500').send(err);
