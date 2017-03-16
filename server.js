@@ -7,14 +7,11 @@ let rp = require('request-promise'),
 	
 app.use(express.json());
 
-function authenticate(body) {
+function authenticate(clientID, secret, code) {
 	return new Promise(function(resolve, reject) {
-		console.log(body);
-		console.log(JSON.parse(body));
-		let clientID = body.clientID;
-		let secret = body.secret;
-		let code = body.code;
-		console.log(clientID + ' _ ' + secret + ' _ ' + code);
+		let clientID = clientID;
+		let secret = secret;
+		let code = code;
 		let data = {
 			grant_type: "authorization_code",
 			code: code
@@ -54,9 +51,7 @@ app.post('/authenticate', function(req, res) {
 	if (req.get('origin') != 'https://woute.github.io') {
 		res.status('401').send('Unauthorized');
 	}
-	console.log('Authenticating :' + JSON.stringify(req.body));
-	console.log(req.body.clientID);
-	authenticate(req.body)
+	authenticate(req.body.clientID, req.body.secret, req.body.code)
 	.then(result => {
 		res.send(result);
 	})
