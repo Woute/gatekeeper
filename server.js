@@ -10,9 +10,6 @@ app.use(express.json());
 function authenticate(clientID, secret, code) {
 	return new Promise(function(resolve, reject) {
 		console.log('Entering authenticate');
-		let clientID = clientID;
-		let secret = secret;
-		let code = code;
 		console.log(clientID + ' _ ' + secret + ' _ ' + code);
 		let data = {
 			grant_type: "authorization_code",
