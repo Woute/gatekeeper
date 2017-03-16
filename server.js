@@ -70,6 +70,7 @@ app.post('/authenticate', function(req, res) {
 	if (req.get('origin') != 'https://woute.github.io') {
 		res.status('401').send('Unauthorized');
 	}
+	console.log('hello');
 	let data = {};
 	authenticate(req.body.clientID, req.body.secret, req.body.code)
 	.then(result => {
