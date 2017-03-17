@@ -76,7 +76,7 @@ function evepraisal(body) {
 		}
 		rp(options)
 		.then(response => {
-			let result = response.replace(/^[.\s\S]*?<div>\n  <h4>\n    <span class="nowrap">/gm, '<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">\n<link href="https://netdna.bootstrapcdn.com/bootswatch/2.3.2/cyborg/bootstrap.min.css" rel="stylesheet">\n<link href="/static/bootstrap-responsive.min.css" rel="stylesheet">\n\n<div>\n  <h4>\n    <span class="nowrap">');
+			let result = response.replace(/^[.\s\S]*?<div>\n  <h4>\n    <span class="nowrap">/gm, '<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">\n<link href="https://netdna.bootstrapcdn.com/bootswatch/2.3.2/cyborg/bootstrap.min.css" rel="stylesheet">\n\n<div>\n  <h4>\n    <span class="nowrap">');
 			result = result.replace(/<script>[.\s\S]*?<\/script>/gm, '');
 			resolve(result);
 		})
