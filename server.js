@@ -63,6 +63,27 @@ function verify(token) {
 	});
 }
 
+function evepraisal(body) {
+	return new Promise(function(resolve, reject) {
+		console.log('Estimating : ' + body);
+		let options = {
+			method: 'POST',
+			uri: 'http://evepraisal.com/estimate',
+			body: body,
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+			}
+		}
+		rp(options)
+		.then(response => {
+			resolve(response);
+		})
+		.catch(err => {
+			reject(err);
+		});
+	});
+}
+
 // Convenience for allowing CORS on routes - GET and POST only
 app.all('*', function (req, res, next) {
 	res.header('Access-Control-Allow-Origin', 'https://woute.github.io');
@@ -110,6 +131,19 @@ app.post('/refresh', function(req, res) {
 		res.status('500').send(err);
 	});
 });
+
+app.post('/evepraisal', function(req, res) {
+	if (req.get('origin') != 'https://woute.github.io') {
+		res.status('403').send('Forbidden : Bad origin');
+	}
+	evepraisal(req.body.raw)
+	.then(response => {
+		res.send(response);
+	})
+	.catch(err => {
+		res.status('500').send(err);
+	});
+});	
 
 let port = process.env.PORT || 9999;
 
