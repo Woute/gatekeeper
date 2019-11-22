@@ -68,10 +68,11 @@ function evepraisal(body) {
 		console.log('Estimating : ' + body);
 		let options = {
 			method: 'POST',
-			uri: 'http://evepraisal.com/estimate',
-			body: body,
+			uri: 'http://evepraisal.com/appraisal?market=jita',
+			body: body.raw,
 			headers: {
-				'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+				'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+				'User-Agent': 'woute.github.io'
 			}
 		}
 		rp(options)
