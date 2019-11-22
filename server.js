@@ -63,13 +63,13 @@ function verify(token) {
 	});
 }
 
-function evepraisal(body) {
+function evepraisal(raw) {
 	return new Promise(function(resolve, reject) {
-		console.log('Estimating : ' + body);
+		console.log('Estimating : ' + raw);
 		let options = {
 			method: 'POST',
 			uri: 'http://evepraisal.com/appraisal?market=jita',
-			body: body.raw,
+			body: raw,
 			headers: {
 				'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
 				'User-Agent': 'woute.github.io'
