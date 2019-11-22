@@ -134,7 +134,7 @@ app.post('/evepraisal', function(req, res) {
 	if (req.get('origin') != 'https://woute.github.io') {
 		res.status('403').send('Forbidden : Bad origin');
 	}
-	evepraisal(req.body.raw)
+	evepraisal(req.body.url)
 	.then(response => {
 		res.send(response);
 	})
