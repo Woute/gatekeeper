@@ -63,23 +63,18 @@ function verify(token) {
 	});
 }
 
-function evepraisal(raw) {
+function evepraisal(url) {
 	return new Promise(function(resolve, reject) {
-		console.log('Estimating : ' + raw);
 		let options = {
 			method: 'POST',
-			uri: 'http://evepraisal.com/appraisal?market=jita',
-			body: raw,
+			uri: url,
 			headers: {
-				'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
 				'User-Agent': 'woute.github.io'
 			}
 		}
 		rp(options)
 		.then(response => {
-			let result = response.replace(/^[.\s\S]*?<div>\n  <h4>\n    <span class="nowrap">/gm, '<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">\n<link href="https://netdna.bootstrapcdn.com/bootswatch/2.3.2/cyborg/bootstrap.min.css" rel="stylesheet">\n\n<div>\n  <h4>\n    <span class="nowrap">');
-			result = result.replace(/<script>[.\s\S]*?<\/script>/gm, '');
-			resolve(result);
+			resolve(response);
 		})
 		.catch(err => {
 			reject(err);
